@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Person implements Serializable {
     private String username;
     private String password;
-    private String imageProfile;
+    private String profilePicture = "empty";
     private boolean isLoggedIn = false;
     private boolean darkMode = false;
     private ArrayList<Community> communities;
@@ -16,6 +16,21 @@ public class Person implements Serializable {
         this.username = username;
         this.password = password;
         communities = new ArrayList<>();
+    }
+
+    public Person(String username, String password, String profilePicture) {
+        this.username = username;
+        this.password = password;
+        this.profilePicture = profilePicture;
+        communities = new ArrayList<>();
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public ArrayList<Community> getCommunities() {
@@ -56,10 +71,6 @@ public class Person implements Serializable {
 
     public boolean isLoggedIn() {
         return isLoggedIn;
-    }
-
-    public String getImageProfile() {
-        return imageProfile;
     }
 
     public void setDarkMode(boolean darkMode) {

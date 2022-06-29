@@ -5,12 +5,13 @@ import java.util.ArrayList;
 public class Community {
     private String name;
     private String description;
+    private String image = "empty";
     private ArrayList<Person> members;
     private ArrayList<Post> posts;
     private ArrayList<Person> admins;
     private ArrayList<Person> banned;
 
-    public Community(String name, String description, Person admin) {
+    public Community(String name, String description, Person admin, String image) {
         this.name = name;
         this.description = description;
         this.members = new ArrayList<Person>();
@@ -20,6 +21,7 @@ public class Community {
         members.add(admin);
         this.banned = new ArrayList<Person>();
         admin.getCommunities().add(this);
+        this.image = image;
     }
 
     public void setName(String name) {

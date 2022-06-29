@@ -12,14 +12,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 /* List of commands
-        delete comment
         ban user
         unban user
-        set darkmode
-        change username
-        change password
-        change profile picture
-        leave community
      */
 
 public class Controller {
@@ -46,6 +40,14 @@ public class Controller {
                 return addComment(dataMap);
             case "remove comment":
                 return removeComment(dataMap);
+            case "set theme":
+                return setTheme(dataMap);
+            case "change username":
+                return changeUsername(dataMap);
+            case "change password":
+                return changePassword(dataMap);
+            case "change profilePicture":
+                return changeProfilePicture(dataMap);
             default:
                 return "Invalid command";
         }
@@ -85,7 +87,8 @@ public class Controller {
         if (Server.communityPosition.containsKey(communityName)) {
             return "createCommunity:" + communityName + ":error";
         }
-        Community community = new Community(communityName, communityDescription, admin);
+        String communityPicture = dataMap.get("communityPicture");
+        Community community = new Community(communityName, communityDescription, admin, communityPicture);
         Server.communities.add(community);
         Server.communityPosition.put(communityName, Server.communities.size() - 1);
         try {
@@ -207,6 +210,47 @@ public class Controller {
         updatePostFile(post);
         return "removeComment:success";
     }
+
+    public String setTheme(HashMap<String, String> dataMap) throws IOException {
+        Person person = Server.users.get(Server.personPosition.get(dataMap.get("username")));
+        String theme = dataMap.get("theme");
+        //theme == dark or light
+        if(theme.equals("dark")) {
+            person.setDarkMode(true);
+        }
+        else {
+            person.setDarkMode(false);
+        }
+        updateUserFile(person);
+        return "setTheme:success";
+    }
+
+    public String changeUsername(HashMap<String, String> dataMap) throws IOException {
+        Person person = Server.users.get(Server.personPosition.get(dataMap.get("username")));
+        String newUsername = dataMap.get("newUsername");
+        if(Server.personPosition.containsKey(newUsername))
+            return "changeUsername:" + newUsername + ":error";
+        person.setUsername(newUsername);
+        updateUserFile(person);
+        return "changeUsername:" + newUsername + ":success";
+    }
+
+    public String changePassword(HashMap<String, String> dataMap) throws IOException {
+        Person person = Server.users.get(Server.personPosition.get(dataMap.get("username")));
+        String newPassword = dataMap.get("newPassword");
+        person.setPassword(newPassword);
+        updateUserFile(person);
+        return "changePassword:success";
+    }
+
+    public String changeProfilePicture(HashMap<String, String> dataMap) throws IOException {
+        Person person = Server.users.get(Server.personPosition.get(dataMap.get("username")));
+        String newProfilePicture = dataMap.get("newProfilePicture");
+        person.setProfilePicture(newProfilePicture);
+        updateUserFile(person);
+        return "changeProfilePicture:success";
+    }
+
 
 
     public static void userToFile(Object object) {
