@@ -11,11 +11,6 @@ import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 
-/* List of commands
-        ban user
-        unban user
-     */
-
 public class Controller {
     public String run(String command, String data) throws IOException {
         HashMap<String, String> dataMap = Convertor.StringToMap(data);

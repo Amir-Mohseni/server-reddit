@@ -8,7 +8,7 @@ public class Client {
         DataInputStream dis = new DataInputStream(socket.getInputStream());
         DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-        dos.writeUTF("send\nmessage:hello everyone,,me:ali");
+        dos.writeUTF("sign in\nusername:user2,,password:123");
         dos.flush();
         System.out.println(dis.readUTF());
         dos.close();
