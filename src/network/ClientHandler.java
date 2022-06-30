@@ -31,9 +31,13 @@ public class ClientHandler extends Thread {
             String command = scanner.nextLine();
             String data = scanner.nextLine();
 
+            System.out.println("command: " + command);
+            System.out.println("data: " + data);
+
             String response = new Controller().run(command, data);
 
             dos.writeBytes(response);
+            System.out.println("response: " + response);
             dos.flush();
 
             dos.close();

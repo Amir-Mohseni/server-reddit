@@ -27,7 +27,7 @@ public class Server {
     public static String message;
 
     public void start() throws Exception {
-        ServerSocket ss = new ServerSocket(8000);
+        ServerSocket ss = new ServerSocket(8080);
         while(true) {
             Socket socket = ss.accept();
             new ClientHandler(socket).start();
