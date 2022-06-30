@@ -20,15 +20,20 @@ public class ClientHandler extends Thread {
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-            String request = dis.readUTF();
-            Scanner scanner = new Scanner(request);
+            StringBuilder request = new StringBuilder();
+            int c = dis.read();
+            while(c != 0) {
+                request.append((char) c);
+                c = dis.read();
+            }
+            Scanner scanner = new Scanner(request.toString());
 
             String command = scanner.nextLine();
             String data = scanner.nextLine();
 
             String response = new Controller().run(command, data);
 
-            dos.writeUTF(response);
+            dos.writeBytes(response);
             dos.flush();
 
             dos.close();
